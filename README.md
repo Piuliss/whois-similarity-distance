@@ -5,3 +5,6 @@ This work is part of my master thesis and the soonest possible I going to add mo
 ## Authors
 - **Raúl B. Netto** 
     ([@Piuliss](https://www.twitter.com/Piuliss), <raulbeni@gmail.com>, <rbenitez@uni.edu.py>, <benitrau@fit.cvut.cz>)
+    
+## IMPORTANT
+this repository was moved to [Stratosphere SPI Project](https://github.com/stratosphereips/whois-similarity-distance)
