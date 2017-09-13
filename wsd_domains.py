@@ -542,17 +542,15 @@ def compare_domains_ids(d1, d2, library='pw', raw=False):
     table = Texttable()
     table.set_cols_align(["c", "c", "c","c"])
     table.set_cols_valign(["t", "m", "m", "m"])
-    table.set_cols_dtype(['t',  # text
-                          'a',
-                          'a',
-                          'f'])  # automatic
-    data = [["Features", str(d1), str(d2), ""]]
+    table.set_cols_dtype(['t','a','a','f'])  # automatic
+    data = [["Features", str(d1), str(d2), "Distance"]]
     features_measure_dist = obj_a.features_measure_distance_dict(obj_b)
     keys_set = set(obj_a.features_whois.keys())
     dates_set = set([KEY_EXPIRATION_DATE, KEY_CREATION_DATE])
     for key in list(keys_set - dates_set):
         data.append([key,obj_a.features_whois[key],obj_b.features_whois[key],features_measure_dist['dist_'+key]])
     data.append(['Domain Duration (in days)', obj_a.domain_duration(),obj_b.domain_duration(),features_measure_dist['dist_duration']])
+    data.append(['Total Distance:', "","",obj_a.get_whois_distance(obj_b)])
     table.add_rows(data)
     print table.draw() + "\n"
     print("WHOIS Distance: " + str(obj_a.get_whois_distance(obj_b)))
@@ -571,6 +569,9 @@ if __name__ == '__main__':
     parser.add_argument("domain_b", help="give Second domain to compare")
     parser.add_argument("-rw", "--rawwhois", help="See WHOIS information of both domains", action="store_true")
     parser.add_argument("-wl", "--whoislibrary",help="Set whois library to choose, pt => passivetotal, pw => pythonwhois", choices=['pw', 'pt'], default='pw')
+    parser.add_argument("-th", "--distance_threshold",help="Set the threshold for determine if two domains are related "
+                                                          +"using their WHOIS information", default='75', type=int)
     args = parser.parse_args()
+    THRESHOLD_DISTANCE = args.distance_threshold
     compare_domains_ids(args.domain_a, args.domain_b, args.whoislibrary,args.rawwhois)
 
