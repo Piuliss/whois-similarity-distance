@@ -9,6 +9,7 @@ from contextlib import contextmanager
 from collections import Iterable
 from passivetotal.common.utilities import is_ip
 from texttable import Texttable
+from _version import __version__
 import re
 from passivetotal.libs.whois import *
 import dateutil.parser
@@ -564,13 +565,15 @@ def compare_domains_ids(d1, d2, library='pw', raw=False):
         pp.pprint(obj_b.raw_whois)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser("Description of how to use the script")
+    parser = argparse.ArgumentParser("This python scripts can calculate the WHOIS Similarity Distance between two given domains.")
     parser.add_argument("domain_a", help="give First domain to compare")
     parser.add_argument("domain_b", help="give Second domain to compare")
     parser.add_argument("-rw", "--rawwhois", help="See WHOIS information of both domains", action="store_true")
     parser.add_argument("-wl", "--whoislibrary",help="Set whois library to choose, pt => passivetotal, pw => pythonwhois", choices=['pw', 'pt'], default='pw')
     parser.add_argument("-th", "--distance_threshold",help="Set the threshold for determine if two domains are related "
                                                           +"using their WHOIS information", default='75', type=int)
+    parser.add_argument("-v",'--version', action='version',
+                        version='%(prog)s version: {version}'.format(version=__version__))
     args = parser.parse_args()
     THRESHOLD_DISTANCE = args.distance_threshold
     compare_domains_ids(args.domain_a, args.domain_b, args.whoislibrary,args.rawwhois)
